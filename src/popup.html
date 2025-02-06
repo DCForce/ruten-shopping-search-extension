@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 400px;
+      padding: 15px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .site-item, .history-item, .wishlist-item {
+      margin: 10px 0;
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+    .delete-btn {
+      float: right;
+      color: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <button id="settingsTab">設定</button>
+    <button id="historyTab">搜尋歷史</button>
+    <button id="wishlistTab">待購清單</button>
+  </div>
+
+  <div id="settings" class="tab-content">
+    <h3>搜尋平台設定</h3>
+    <div id="siteList"></div>
+  </div>
+
+  <div id="history" class="tab-content">
+    <h3>搜尋歷史</h3>
+    <div id="historyList"></div>
+  </div>
+
+  <div id="wishlist" class="tab-content">
+    <h3>待購清單</h3>
+    <input type="text" id="newItem" placeholder="輸入商品名稱">
+    <button id="addItem">新增</button>
+    <div id="wishlistItems"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
