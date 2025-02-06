@@ -1,13 +1,12 @@
 # 台灣多平台購物搜尋 (Multi-Platform Shopping Search)
 
-![License](https://img.shields.io/github/license/your-username/multi-platform-shopping-search)
-![Version](https://img.shields.io/github/v/release/your-username/multi-platform-shopping-search)
-![Issues](https://img.shields.io/github/issues/your-username/multi-platform-shopping-search)
+![License](https://img.shields.io/github/license/DCForce/ruten-shopping-search-extension)
+![Version](https://img.shields.io/github/v/release/DCForce/ruten-shopping-search-extension)
+![Issues](https://img.shields.io/github/issues/DCForce/ruten-shopping-search-extension)
 
 Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
 內建搜尋歷史跟簡單的文字待購清單功能。
 
-[English](./README_EN.md) | 繁體中文
 
 ## ✨ 功能特色
 
@@ -25,7 +24,7 @@ Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
 
 ### 從 Chrome Web Store 安裝（推薦）
 
-1. 前往 [Chrome Web Store](your-extension-url)
+1. 前往 [Chrome Web Store]()
 2. 點擊「新增至 Chrome」
 3. 確認安裝
 
@@ -61,18 +60,18 @@ Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
 
 ### 本地開發
 
-1. clone專案：
+1. Clone the repository:
 ```bash
 git clone https://github.com/DCForce/ruten-shopping-search-extension.git
 ```
 
-2. 安裝依賴：
+2. Install dependencies:
 ```bash
 cd ruten-shopping-search-extension
 npm install
 ```
 
-3. 開發模式：
+3. Development mode:
 ```bash
 npm run dev
 ```
@@ -98,10 +97,10 @@ npm run dev
 
 我們歡迎所有形式的貢獻，包括但不限於：
 
-- 提交 Issue
+- 提交 issues
 - 提出新功能建議
 - 改進文檔
-- 提交 Pull Request
+- 提交 pull requests
 
 請參考我們的 [貢獻指南](CONTRIBUTING.md) 了解詳細資訊。
 
