@@ -1,2 +1,123 @@
-# ruten-shopping-search-extension
-台灣多平台購物搜尋
+# 台灣多平台購物搜尋 (Multi-Platform Shopping Search)
+
+![License](https://img.shields.io/github/license/your-username/multi-platform-shopping-search)
+![Version](https://img.shields.io/github/v/release/your-username/multi-platform-shopping-search)
+![Issues](https://img.shields.io/github/issues/your-username/multi-platform-shopping-search)
+
+Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
+內建搜尋歷史跟簡單的文字待購清單功能。
+
+[English](./README_EN.md) | 繁體中文
+
+## ✨ 功能特色
+
+- 🔍 一鍵在多個購物平台搜尋商品
+- 🛍️ 支援台灣主要購物平台：
+  - 露天拍賣
+  - 蝦皮購物
+  - Yahoo購物
+  - PChome
+- 📝 自動記錄搜尋歷史
+- 📋 待購清單管理
+- ⚙️ 自訂搜尋平台設定
+
+## 📥 安裝方式
+
+### 從 Chrome Web Store 安裝（推薦）
+
+1. 前往 [Chrome Web Store](your-extension-url)
+2. 點擊「新增至 Chrome」
+3. 確認安裝
+
+### 手動安裝（開發版）
+
+1. 下載此專案的 ZIP 檔案
+2. 解壓縮到本地資料夾
+3. 打開 Chrome 擴充功能頁面 (chrome://extensions/)
+4. 開啟「開發人員模式」
+5. 點擊「載入未封裝項目」
+6. 選擇解壓縮後的資料夾
+
+## 🚀 使用方式
+
+1. 在網頁上選取商品名稱
+2. 點擊右鍵，選擇想要搜尋的平台
+   - 可選擇單一平台搜尋
+   - 或使用「在所有平台搜尋」一次搜尋所有平台
+3. 自動開啟新分頁顯示搜尋結果
+4. 點擊工具列圖示可：
+   - 管理平台設定
+   - 查看搜尋歷史
+   - 編輯待購清單
+
+## 🛠️ 開發相關
+
+### 技術框架
+
+- HTML
+- CSS
+- JavaScript
+- Chrome Extension API
+
+### 本地開發
+
+1. clone專案：
+```bash
+git clone https://github.com/DCForce/ruten-shopping-search-extension.git
+```
+
+2. 安裝依賴：
+```bash
+cd ruten-shopping-search-extension
+npm install
+```
+
+3. 開發模式：
+```bash
+npm run dev
+```
+
+### 專案結構
+
+```
+├── manifest.json
+├── background.js
+├── popup
+│   ├── popup.html
+│   ├── popup.css
+│   └── popup.js
+├── icons
+│   ├── icon48.png
+│   └── icon128.png
+└── _locales
+    ├── zh_TW
+    └── en
+```
+
+## 🤝 貢獻指南
+
+我們歡迎所有形式的貢獻，包括但不限於：
+
+- 提交 Issue
+- 提出新功能建議
+- 改進文檔
+- 提交 Pull Request
+
+請參考我們的 [貢獻指南](CONTRIBUTING.md) 了解詳細資訊。
+
+## 📄 版本歷程
+
+詳見 [CHANGELOG.md](CHANGELOG.md)
+
+## 📜 授權協議
+
+此專案使用 MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案
+
+## 👥 作者
+
+- [DCForce](https://github.com/DCForce)
+
+## 🙏 鳴謝
+
+感謝所有貢獻者和使用者的支持！
+
