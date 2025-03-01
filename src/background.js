@@ -19,6 +19,11 @@ const defaultSites = {
     name: 'PChome',
     url: 'https://ecshweb.pchome.com.tw/search/v3.3/?q=',
     enabled: true
+  },
+  'scryfall': {
+    name: 'Scryfall',
+    url: 'https://scryfall.com/search?q=',
+    enabled: true
   }
 };
 
