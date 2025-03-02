@@ -1,0 +1,18 @@
+{
+    "name": "multi-platform-shopping-search",
+    "version": "1.0.0",
+    "description": "Chrome extension for searching products across multiple shopping and MTG platforms",
+    "scripts": {
+      "build": "webpack --mode production",
+      "dev": "webpack --mode development --watch",
+      "zip": "node scripts/build-zip.js"
+    },
+    "author": "DCForce",
+    "license": "MIT",
+    "devDependencies": {
+      "copy-webpack-plugin": "^11.0.0",
+      "webpack": "^5.88.2",
+      "webpack-cli": "^5.1.4",
+      "archiver": "^5.3.1"
+    }
+  }
