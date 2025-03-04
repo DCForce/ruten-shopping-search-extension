@@ -76,6 +76,11 @@ npm install
 npm run dev
 ```
 
+4. Release (Dist):
+```bash
+npm run build
+```
+
 ### 專案結構
 
 ```
