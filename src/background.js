@@ -109,3 +109,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
   });
 });
+
+// 監聽來自popup.js的訊息
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === 'updateContextMenu') {
+    updateContextMenu();
+  }
+});

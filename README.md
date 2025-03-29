@@ -81,6 +81,10 @@ npm run dev
 npm run build
 ```
 
+```bash
+npm run zip
+```
+
 ### 專案結構
 
 ```
