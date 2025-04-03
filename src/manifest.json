@@ -6,10 +6,18 @@
   "permissions": [
     "contextMenus",
     "storage",
-    "tabs"
+    "activeTab"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://www.ruten.com.tw/*",
+    "https://shopee.tw/*",
+    "https://tw.bid.yahoo.com/*",
+    "https://ecshweb.pchome.com.tw/*",
+    "https://scryfall.com/*",
+    "https://search.books.com.tw/*",
+    "https://www.eslite.com/*",
+    "https://www.taaze.tw/*",
+    "https://gamesquare.tw/*"
   ],
   "background": {
     "service_worker": "background.js"

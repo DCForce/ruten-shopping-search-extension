@@ -26,74 +26,91 @@ function loadSettings() {
     const siteList = document.getElementById('sortableSiteList');
     siteList.innerHTML = '';
 
-    Object.entries(sites).forEach(([key, site]) => {
-      const li = document.createElement('li');
-      li.className = 'sortable-item';
-      li.dataset.key = key;
-      li.innerHTML = `
-        <span class="site-name">${site.name}</span>
-        <input type="checkbox" ${site.enabled ? 'checked' : ''}>
-      `;
+    // 定義分類
+    const categories = {
+      'shopping': {
+        title: '購物平台',
+        keys: ['pchome', 'ruten', 'shopee', 'yahoo'],
+        color: '#4CAF50'
+      },
+      'books': {
+        title: '書店平台',
+        keys: ['eslite', 'books', 'taaze'],
+        color: '#2196F3'
+      },
+      'games': {
+        title: '遊戲平台',
+        keys: ['scryfall', 'gamesquare'],
+        color: '#FF9800'
+      }
+    };
 
-      const checkbox = li.querySelector('input');
-      checkbox.addEventListener('change', () => {
-        sites[key].enabled = checkbox.checked;
+    // 依分類建立清單
+    Object.entries(categories).forEach(([category, data]) => {
+      // 建立分類標題
+      const categoryTitle = document.createElement('div');
+      categoryTitle.className = 'category-title';
+      categoryTitle.style.borderLeftColor = data.color;
+      categoryTitle.innerHTML = `
+        <input type="checkbox" class="category-checkbox">
+        <span>${data.title}</span>
+      `;
+      siteList.appendChild(categoryTitle);
+
+      // 建立該分類的平台清單
+      const categoryList = document.createElement('div');
+      categoryList.className = 'category-list';
+      siteList.appendChild(categoryList);
+
+      data.keys.forEach(key => {
+        if (sites[key]) {
+          const li = document.createElement('li');
+          li.className = 'site-item';
+          li.dataset.key = key;
+          li.innerHTML = `
+            <input type="checkbox" ${sites[key].enabled ? 'checked' : ''}>
+            <span class="site-name">${sites[key].name}</span>
+          `;
+
+          const checkbox = li.querySelector('input');
+          checkbox.addEventListener('change', () => {
+            sites[key].enabled = checkbox.checked;
+            chrome.storage.sync.set({ sites });
+            chrome.runtime.sendMessage({ action: 'updateContextMenu' });
+            updateCategoryCheckbox(categoryTitle, categoryList);
+          });
+
+          categoryList.appendChild(li);
+        }
+      });
+
+      // 設定分類標題的 checkbox 事件
+      const categoryCheckbox = categoryTitle.querySelector('.category-checkbox');
+      categoryCheckbox.checked = data.keys.every(key => sites[key]?.enabled);
+      
+      categoryCheckbox.addEventListener('change', () => {
+        const items = categoryList.querySelectorAll('.site-item input');
+        items.forEach(item => {
+          item.checked = categoryCheckbox.checked;
+          const key = item.closest('.site-item').dataset.key;
+          sites[key].enabled = categoryCheckbox.checked;
+        });
         chrome.storage.sync.set({ sites });
         chrome.runtime.sendMessage({ action: 'updateContextMenu' });
       });
-
-      siteList.appendChild(li);
     });
-
-    enableDragAndDrop(siteList, sites);
   });
 }
 
-function enableDragAndDrop(list, sites) {
-  let draggedItem = null;
-
-  list.addEventListener('dragstart', (e) => {
-    draggedItem = e.target;
-    e.target.style.opacity = '0.5';
-  });
-
-  list.addEventListener('dragend', (e) => {
-    e.target.style.opacity = '';
-    draggedItem = null;
-  });
-
-  list.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    const target = e.target.closest('.sortable-item');
-    if (target && target !== draggedItem) {
-      const rect = target.getBoundingClientRect();
-      const next = (e.clientY - rect.top) / rect.height > 0.5;
-      list.insertBefore(draggedItem, next ? target.nextSibling : target);
-    }
-  });
-
-  list.addEventListener('drop', () => {
-    const sortedKeys = Array.from(list.children).map((item) => item.dataset.key);
-    const sortedSites = {};
-    sortedKeys.forEach((key) => {
-      sortedSites[key] = sites[key];
-    });
-    chrome.storage.sync.set({ sites: sortedSites }, () => {
-      // 顯示排序已存檔提示
-      const caption = document.getElementById('sortSavedCaption');
-      caption.style.display = 'block';
-      setTimeout(() => {
-        caption.style.display = 'none';
-      }, 2000);
-
-      // 重新載入設定以更新顯示
-      loadSettings();
-    });
-  });
-
-  Array.from(list.children).forEach((item) => {
-    item.setAttribute('draggable', true);
-  });
+// 更新分類標題的 checkbox 狀態
+function updateCategoryCheckbox(categoryTitle, categoryList) {
+  const items = categoryList.querySelectorAll('.site-item input');
+  const allChecked = Array.from(items).every(item => item.checked);
+  const someChecked = Array.from(items).some(item => item.checked);
+  const categoryCheckbox = categoryTitle.querySelector('.category-checkbox');
+  
+  categoryCheckbox.checked = allChecked;
+  categoryCheckbox.indeterminate = someChecked && !allChecked;
 }
 
 // 載入搜尋歷史
