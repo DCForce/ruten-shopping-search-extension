@@ -1,13 +1,16 @@
 {
   "manifest_version": 3,
   "name": "多平台購物搜尋",
-  "version": "1.0",
+  "version": "1.1.2",
   "description": "在多個購物平台搜尋商品並記錄搜尋歷史",
   "permissions": [
     "contextMenus",
-    "storage"
+    "storage",
+    "tabs"
   ],
-  "host_permissions": [],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },

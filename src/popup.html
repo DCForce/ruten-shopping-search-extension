@@ -13,7 +13,9 @@
 
   <div id="settings" class="tab-content">
     <h3>搜尋平台設定</h3>
-    <div id="siteList"></div>
+    <p>拖放以排序網站：</p>
+    <caption id="sortSavedCaption" style="display: none; color: green; font-size: 0.9em;">排序已存檔</caption>
+    <ul id="sortableSiteList"></ul>
   </div>
 
   <div id="history" class="tab-content">
@@ -25,6 +27,7 @@
     <h3>待購清單</h3>
     <input type="text" id="newItem" placeholder="輸入商品名稱">
     <button id="addItem">新增</button>
+    <button id="addCurrentPage">新增目前頁面</button>
     <div id="wishlistItems"></div>
   </div>
 

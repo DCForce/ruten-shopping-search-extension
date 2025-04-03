@@ -24,6 +24,26 @@ const defaultSites = {
     name: 'Scryfall',
     url: 'https://scryfall.com/search?q=',
     enabled: true
+  },
+  'books': {
+    name: '博客來網路書店',
+    url: 'https://search.books.com.tw/search/query/key/',
+    enabled: true
+  },
+  'eslite': {
+    name: '誠品',
+    url: 'https://www.eslite.com/Search?keyword=',
+    enabled: true
+  },
+  'taaze': {
+    name: 'Tazze',
+    url: 'https://www.taaze.tw/rwd_searchResult.html?keyType%5B%5D=0&keyword%5B%5D=',
+    enabled: true
+  },
+  'gamesquare': {
+    name: '遊戲平方',
+    url: 'https://gamesquare.tw/shop-list.php?keyword=',
+    enabled: true
   }
 };
 
@@ -49,15 +69,15 @@ function updateContextMenu() {
   chrome.contextMenus.removeAll(() => {
     chrome.storage.sync.get('sites', (result) => {
       const sites = result.sites || defaultSites;
-      
+
       // 建立主選單
       chrome.contextMenus.create({
         id: 'searchAll',
         title: '在所有平台搜尋「%s」',
         contexts: ['selection']
       });
-      
-      // 建立子選單
+
+      // 建立子選單，按排序順序新增
       Object.entries(sites).forEach(([key, site]) => {
         if (site.enabled) {
           chrome.contextMenus.create({
