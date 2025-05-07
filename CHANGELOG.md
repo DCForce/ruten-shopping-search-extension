@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-05-07
+
+### Added
+- Support momo website
+
+### Changed
+- version number will be updated when npm run build
+
+### Fixed
+- None
+
 ## [1.0.0] - 2024-02-06
 
 ### Added

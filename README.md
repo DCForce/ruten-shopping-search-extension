@@ -24,7 +24,7 @@ Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
 
 ### 從 Chrome Web Store 安裝（推薦）
 
-1. 前往 [Chrome Web Store]()
+1. 前往 [Chrome Web Store](https://chromewebstore.google.com/detail/cpgmdkgicjdjfpaenckloocokjbmibai)
 2. 點擊「新增至 Chrome」
 3. 確認安裝
 
@@ -80,6 +80,7 @@ npm run dev
 ```bash
 npm run build
 ```
+- Update the version variable in package.json before building the extension
 
 ```bash
 npm run zip

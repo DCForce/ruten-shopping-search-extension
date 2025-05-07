@@ -30,7 +30,7 @@ function loadSettings() {
     const categories = {
       'shopping': {
         title: '購物平台',
-        keys: ['pchome', 'ruten', 'shopee', 'yahoo'],
+        keys: ['momo', 'pchome', 'ruten', 'shopee', 'yahoo'],
         color: '#4CAF50'
       },
       'books': {

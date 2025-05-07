@@ -1,18 +1,8 @@
 // 預設的搜尋網站配置
 const defaultSites = {
-  'ruten': {
-    name: '露天拍賣',
-    url: 'https://www.ruten.com.tw/find/?q=',
-    enabled: true
-  },
-  'shopee': {
-    name: '蝦皮購物',
-    url: 'https://shopee.tw/search?keyword=',
-    enabled: true
-  },
-  'yahoo': {
-    name: 'Yahoo購物',
-    url: 'https://tw.bid.yahoo.com/search/auction/product?p=',
+  'momo': {
+    name: 'momo購物網',
+    url: 'https://www.momoshop.com.tw/search/searchShop.jsp?keyword=',
     enabled: true
   },
   'pchome': {
@@ -20,9 +10,19 @@ const defaultSites = {
     url: 'https://ecshweb.pchome.com.tw/search/v3.3/?q=',
     enabled: true
   },
-  'scryfall': {
-    name: 'Scryfall',
-    url: 'https://scryfall.com/search?q=',
+  'ruten': {
+    name: '露天拍賣',
+    url: 'https://www.ruten.com.tw/find/?q=',
+    enabled: true
+  },
+  'yahoo': {
+    name: 'Yahoo購物',
+    url: 'https://tw.bid.yahoo.com/search/auction/product?p=',
+    enabled: true
+  },
+  'shopee': {
+    name: '蝦皮購物',
+    url: 'https://shopee.tw/search?keyword=',
     enabled: true
   },
   'books': {
@@ -43,6 +43,11 @@ const defaultSites = {
   'gamesquare': {
     name: '遊戲平方',
     url: 'https://gamesquare.tw/shop-list.php?keyword=',
+    enabled: true
+  },
+  'scryfall': {
+    name: 'Scryfall',
+    url: 'https://scryfall.com/search?q=',
     enabled: true
   }
 };
