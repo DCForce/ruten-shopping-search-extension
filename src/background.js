@@ -64,8 +64,14 @@ chrome.runtime.onInstalled.addListener(() => {
     if (!result.wishlist) {
       chrome.storage.sync.set({ wishlist: [] });
     }
+    
+    // 確保在安裝/更新時更新選單
+    updateContextMenu();
   });
-  
+});
+
+// 在擴充功能啟動時更新選單
+chrome.runtime.onStartup.addListener(() => {
   updateContextMenu();
 });
 
