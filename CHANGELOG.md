@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2024-05-09
+
+### Added
+- None
+
+### Changed
+- None
+
+### Fixed
+- Fixed context menu not showing up after extension update
+- Added onStartup event listener to ensure context menu appears correctly
+
 ## [1.2.0] - 2024-05-07
 
 ### Added
