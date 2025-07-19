@@ -123,13 +123,22 @@ function loadHistory() {
     history.forEach((record, index) => {
       const div = document.createElement('div');
       div.className = 'history-item';
-      div.innerHTML = `
-        <span>${record.term}</span>
-        <small>${new Date(record.timestamp).toLocaleString()}</small>
-        <span class="delete-btn" data-index="${index}">×</span>
-      `;
-      
-      div.querySelector('.delete-btn').addEventListener('click', (e) => {
+      const termSpan = document.createElement('span');
+      termSpan.textContent = record.term;
+
+      const timeSmall = document.createElement('small');
+      timeSmall.textContent = new Date(record.timestamp).toLocaleString();
+
+      const deleteSpan = document.createElement('span');
+      deleteSpan.className = 'delete-btn';
+      deleteSpan.dataset.index = index;
+      deleteSpan.textContent = '×';
+
+      div.appendChild(termSpan);
+      div.appendChild(timeSmall);
+      div.appendChild(deleteSpan);
+
+      deleteSpan.addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
         history.splice(index, 1);
         chrome.storage.sync.set({ searchHistory: history }, loadHistory);
@@ -150,13 +159,25 @@ function loadWishlist() {
     wishlist.forEach((item, index) => {
       const div = document.createElement('div');
       div.className = 'wishlist-item';
-      div.innerHTML = `
-        <span>${item.name}</span>
-        <a href="${item.url}" target="_blank" class="item-url">${item.url}</a>
-        <span class="delete-btn" data-index="${index}">×</span>
-      `;
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = item.name;
 
-      div.querySelector('.delete-btn').addEventListener('click', (e) => {
+      const link = document.createElement('a');
+      link.href = item.url;
+      link.target = '_blank';
+      link.className = 'item-url';
+      link.textContent = item.url;
+
+      const deleteSpan = document.createElement('span');
+      deleteSpan.className = 'delete-btn';
+      deleteSpan.dataset.index = index;
+      deleteSpan.textContent = '×';
+
+      div.appendChild(nameSpan);
+      div.appendChild(link);
+      div.appendChild(deleteSpan);
+
+      deleteSpan.addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
         wishlist.splice(index, 1);
         chrome.storage.sync.set({ wishlist }, loadWishlist);
