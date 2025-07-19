@@ -54,19 +54,21 @@ const defaultSites = {
 
 // 初始化設定
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.get(['sites', 'searchHistory', 'wishlist'], (result) => {
-    if (!result.sites) {
-      chrome.storage.sync.set({ sites: defaultSites });
-    }
-    if (!result.searchHistory) {
-      chrome.storage.sync.set({ searchHistory: [] });
-    }
-    if (!result.wishlist) {
-      chrome.storage.sync.set({ wishlist: [] });
-    }
-    
-    // 確保在安裝/更新時更新選單
-    updateContextMenu();
+  chrome.storage.sync.get(['sites', 'wishlist'], (syncResult) => {
+    chrome.storage.local.get('searchHistory', (localResult) => {
+      if (!syncResult.sites) {
+        chrome.storage.sync.set({ sites: defaultSites });
+      }
+      if (!localResult.searchHistory) {
+        chrome.storage.local.set({ searchHistory: [] });
+      }
+      if (!syncResult.wishlist) {
+        chrome.storage.sync.set({ wishlist: [] });
+      }
+
+      // 確保在安裝/更新時更新選單
+      updateContextMenu();
+    });
   });
 });
 
@@ -106,9 +108,10 @@ function updateContextMenu() {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const searchTerm = encodeURIComponent(info.selectionText);
   
-  chrome.storage.sync.get(['sites', 'searchHistory'], (result) => {
-    const sites = result.sites || defaultSites;
-    const history = result.searchHistory || [];
+  chrome.storage.sync.get('sites', (siteResult) => {
+    const sites = siteResult.sites || defaultSites;
+    chrome.storage.local.get('searchHistory', (historyResult) => {
+      const history = historyResult.searchHistory || [];
     
     // 記錄搜尋歷史
     const searchRecord = {
@@ -116,9 +119,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       timestamp: new Date().toISOString(),
       platform: info.menuItemId === 'searchAll' ? 'all' : info.menuItemId
     };
-    history.unshift(searchRecord);
-    if (history.length > 100) history.pop(); // 限制歷史記錄數量
-    chrome.storage.sync.set({ searchHistory: history });
+      history.unshift(searchRecord);
+      if (history.length > 100) history.pop(); // 限制歷史記錄數量
+      chrome.storage.local.set({ searchHistory: history });
     
     if (info.menuItemId === 'searchAll') {
       // 在所有啟用的平台上搜尋
@@ -138,6 +141,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         });
       }
     }
+    });
   });
 });
 
