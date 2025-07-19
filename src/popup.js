@@ -22,6 +22,10 @@ newItemInput.addEventListener('input', () => {
 // 載入設定
 function loadSettings() {
   chrome.storage.sync.get('sites', (result) => {
+    if (chrome.runtime.lastError) {
+      console.error('Failed to load sites settings:', chrome.runtime.lastError);
+      return;
+    }
     const sites = result.sites || {};
     const siteList = document.getElementById('sortableSiteList');
     siteList.innerHTML = '';
@@ -74,11 +78,15 @@ function loadSettings() {
 
           const checkbox = li.querySelector('input');
           checkbox.addEventListener('change', () => {
-            sites[key].enabled = checkbox.checked;
-            chrome.storage.sync.set({ sites });
-            chrome.runtime.sendMessage({ action: 'updateContextMenu' });
-            updateCategoryCheckbox(categoryTitle, categoryList);
+          sites[key].enabled = checkbox.checked;
+          chrome.storage.sync.set({ sites }, () => {
+            if (chrome.runtime.lastError) {
+              console.error('Failed to update site settings:', chrome.runtime.lastError);
+            }
           });
+          chrome.runtime.sendMessage({ action: 'updateContextMenu' });
+          updateCategoryCheckbox(categoryTitle, categoryList);
+        });
 
           categoryList.appendChild(li);
         }
@@ -95,7 +103,11 @@ function loadSettings() {
           const key = item.closest('.site-item').dataset.key;
           sites[key].enabled = categoryCheckbox.checked;
         });
-        chrome.storage.sync.set({ sites });
+        chrome.storage.sync.set({ sites }, () => {
+          if (chrome.runtime.lastError) {
+            console.error('Failed to update site settings:', chrome.runtime.lastError);
+          }
+        });
         chrome.runtime.sendMessage({ action: 'updateContextMenu' });
       });
     });
@@ -116,6 +128,10 @@ function updateCategoryCheckbox(categoryTitle, categoryList) {
 // 載入搜尋歷史
 function loadHistory() {
   chrome.storage.sync.get('searchHistory', (result) => {
+    if (chrome.runtime.lastError) {
+      console.error('Failed to load search history:', chrome.runtime.lastError);
+      return;
+    }
     const history = result.searchHistory || [];
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
@@ -132,7 +148,12 @@ function loadHistory() {
       div.querySelector('.delete-btn').addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
         history.splice(index, 1);
-        chrome.storage.sync.set({ searchHistory: history }, loadHistory);
+        chrome.storage.sync.set({ searchHistory: history }, () => {
+          if (chrome.runtime.lastError) {
+            console.error('Failed to update search history:', chrome.runtime.lastError);
+          }
+          loadHistory();
+        });
       });
       
       historyList.appendChild(div);
@@ -143,6 +164,10 @@ function loadHistory() {
 // 載入待購清單
 function loadWishlist() {
   chrome.storage.sync.get('wishlist', (result) => {
+    if (chrome.runtime.lastError) {
+      console.error('Failed to load wishlist:', chrome.runtime.lastError);
+      return;
+    }
     const wishlist = result.wishlist || [];
     const wishlistItems = document.getElementById('wishlistItems');
     wishlistItems.innerHTML = '';
@@ -159,7 +184,12 @@ function loadWishlist() {
       div.querySelector('.delete-btn').addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
         wishlist.splice(index, 1);
-        chrome.storage.sync.set({ wishlist }, loadWishlist);
+        chrome.storage.sync.set({ wishlist }, () => {
+          if (chrome.runtime.lastError) {
+            console.error('Failed to update wishlist:', chrome.runtime.lastError);
+          }
+          loadWishlist();
+        });
       });
 
       wishlistItems.appendChild(div);
@@ -174,6 +204,10 @@ document.getElementById('addItem').addEventListener('click', () => {
   
   if (itemText) {
     chrome.storage.sync.get('wishlist', (result) => {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to load wishlist:', chrome.runtime.lastError);
+        return;
+      }
       const wishlist = result.wishlist || [];
       // 檢查是否為 URL
       try {
@@ -190,6 +224,9 @@ document.getElementById('addItem').addEventListener('click', () => {
         });
       }
       chrome.storage.sync.set({ wishlist }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to add item to wishlist:', chrome.runtime.lastError);
+        }
         input.value = '';
         document.getElementById('addItem').disabled = true; // 確保按鈕回到禁用狀態
         loadWishlist();
@@ -208,13 +245,22 @@ document.getElementById('addCurrentPage').addEventListener('click', () => {
         url: currentTab.url
       };
       
-      chrome.storage.sync.get('wishlist', (result) => {
-        const wishlist = result.wishlist || [];
+        chrome.storage.sync.get('wishlist', (result) => {
+          if (chrome.runtime.lastError) {
+            console.error('Failed to load wishlist:', chrome.runtime.lastError);
+            return;
+          }
+          const wishlist = result.wishlist || [];
         // 檢查是否已存在相同的 URL
         const isDuplicate = wishlist.some(existingItem => existingItem.url === item.url);
         if (!isDuplicate) {
-          wishlist.unshift(item);
-          chrome.storage.sync.set({ wishlist }, loadWishlist);
+            wishlist.unshift(item);
+            chrome.storage.sync.set({ wishlist }, () => {
+              if (chrome.runtime.lastError) {
+                console.error('Failed to add current page to wishlist:', chrome.runtime.lastError);
+              }
+              loadWishlist();
+            });
         } else {
           alert('此頁面已經在待購清單中了！');
         }

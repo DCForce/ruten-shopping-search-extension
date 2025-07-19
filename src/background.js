@@ -55,16 +55,32 @@ const defaultSites = {
 // 初始化設定
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.get(['sites', 'searchHistory', 'wishlist'], (result) => {
+    if (chrome.runtime.lastError) {
+      console.error('Failed to load initial settings:', chrome.runtime.lastError);
+      return;
+    }
     if (!result.sites) {
-      chrome.storage.sync.set({ sites: defaultSites });
+      chrome.storage.sync.set({ sites: defaultSites }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to set default sites:', chrome.runtime.lastError);
+        }
+      });
     }
     if (!result.searchHistory) {
-      chrome.storage.sync.set({ searchHistory: [] });
+      chrome.storage.sync.set({ searchHistory: [] }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to init search history:', chrome.runtime.lastError);
+        }
+      });
     }
     if (!result.wishlist) {
-      chrome.storage.sync.set({ wishlist: [] });
+      chrome.storage.sync.set({ wishlist: [] }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Failed to init wishlist:', chrome.runtime.lastError);
+        }
+      });
     }
-    
+
     // 確保在安裝/更新時更新選單
     updateContextMenu();
   });
@@ -79,6 +95,10 @@ chrome.runtime.onStartup.addListener(() => {
 function updateContextMenu() {
   chrome.contextMenus.removeAll(() => {
     chrome.storage.sync.get('sites', (result) => {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to load sites for context menu:', chrome.runtime.lastError);
+        return;
+      }
       const sites = result.sites || defaultSites;
 
       // 建立主選單
@@ -107,6 +127,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   const searchTerm = encodeURIComponent(info.selectionText);
   
   chrome.storage.sync.get(['sites', 'searchHistory'], (result) => {
+    if (chrome.runtime.lastError) {
+      console.error('Failed to load sites or history:', chrome.runtime.lastError);
+      return;
+    }
     const sites = result.sites || defaultSites;
     const history = result.searchHistory || [];
     
@@ -118,7 +142,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     };
     history.unshift(searchRecord);
     if (history.length > 100) history.pop(); // 限制歷史記錄數量
-    chrome.storage.sync.set({ searchHistory: history });
+    chrome.storage.sync.set({ searchHistory: history }, () => {
+      if (chrome.runtime.lastError) {
+        console.error('Failed to save search history:', chrome.runtime.lastError);
+      }
+    });
     
     if (info.menuItemId === 'searchAll') {
       // 在所有啟用的平台上搜尋
