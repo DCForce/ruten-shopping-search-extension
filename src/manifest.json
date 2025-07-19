@@ -8,18 +8,7 @@
     "storage",
     "activeTab"
   ],
-  "host_permissions": [
-    "https://www.ruten.com.tw/*",
-    "https://shopee.tw/*",
-    "https://tw.bid.yahoo.com/*",
-    "https://ecshweb.pchome.com.tw/*",
-    "https://scryfall.com/*",
-    "https://search.books.com.tw/*",
-    "https://www.eslite.com/*",
-    "https://www.taaze.tw/*",
-    "https://gamesquare.tw/*",
-    "https://www.momoshop.com.tw/*"
-  ],
+  "host_permissions": [],
   "background": {
     "service_worker": "background.js"
   },
