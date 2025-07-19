@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2024-05-09
+
+### Added
+- Validated protocol for wishlist URLs
+
+### Changed
+- Switched search history to local storage
+- Removed unneeded host permissions
+
+### Fixed
+- Fixed innerHTML assignments in popup.js
+- Fixed Taaze name
+
 ## [1.2.1] - 2024-05-09
 
 ### Added
