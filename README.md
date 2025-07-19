@@ -86,6 +86,20 @@ npm run build
 npm run zip
 ```
 
+### Testing
+To manually test the Chrome extension:
+1. Clone the repository and install dependencies (run ```npm install```).
+2. Run ```npm run build``` to produce the dist/ directory (or ```npm run dev``` to watch for changes).
+3. Open ```chrome://extensions``` in a Chrome browser and enable “Developer mode”.
+4. Click **Load unpacked** and select the generated ```dist/``` folder.
+5. Interact with the extension:
+   - Right‑click selected text on any page to verify the search options appear.
+   - Use the extension’s popup to check settings, search history, and the wishlist.
+   - Confirm new tabs open with the correct URLs and history/wishlist entries persist.
+
+There are no scripts or documentation for automated tests, so testing is currently manual. Automated testing could be added using tools like Puppeteer to simulate browser interactions, but such infrastructure isn’t present in the repository.
+
+
 ### 專案結構
 
 ```
