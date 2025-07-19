@@ -175,13 +175,21 @@ document.getElementById('addItem').addEventListener('click', () => {
   if (itemText) {
     chrome.storage.sync.get('wishlist', (result) => {
       const wishlist = result.wishlist || [];
-      // 檢查是否為 URL
+      // 檢查是否為 URL 且協定為 http 或 https
       try {
         const url = new URL(itemText);
-        wishlist.unshift({
-          name: url.hostname,
-          url: itemText
-        });
+        if (url.protocol === 'http:' || url.protocol === 'https:') {
+          wishlist.unshift({
+            name: url.hostname,
+            url: itemText
+          });
+        } else {
+          // 協定不被支援，僅儲存純文字
+          wishlist.unshift({
+            name: itemText,
+            url: ''
+          });
+        }
       } catch {
         // 如果不是有效的 URL，則作為純文字項目儲存
         wishlist.unshift({
