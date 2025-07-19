@@ -36,7 +36,7 @@ const defaultSites = {
     enabled: true
   },
   'taaze': {
-    name: 'Tazze',
+    name: 'Taaze',
     url: 'https://www.taaze.tw/rwd_searchResult.html?keyType%5B%5D=0&keyword%5B%5D=',
     enabled: true
   },
