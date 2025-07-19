@@ -115,7 +115,7 @@ function updateCategoryCheckbox(categoryTitle, categoryList) {
 
 // 載入搜尋歷史
 function loadHistory() {
-  chrome.storage.sync.get('searchHistory', (result) => {
+  chrome.storage.local.get('searchHistory', (result) => {
     const history = result.searchHistory || [];
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
@@ -132,7 +132,7 @@ function loadHistory() {
       div.querySelector('.delete-btn').addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index);
         history.splice(index, 1);
-        chrome.storage.sync.set({ searchHistory: history }, loadHistory);
+        chrome.storage.local.set({ searchHistory: history }, loadHistory);
       });
       
       historyList.appendChild(div);
