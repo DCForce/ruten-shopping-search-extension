@@ -132,6 +132,9 @@ There are no scripts or documentation for automated tests, so testing is current
 
 詳見 [CHANGELOG.md](CHANGELOG.md)
 
+### Todo
+- 在該網站不啟用的選項
+
 ## 📜 授權協議
 
 此專案使用 MIT 授權 - 詳見 [LICENSE](LICENSE) 檔案
