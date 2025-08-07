@@ -9,6 +9,59 @@ document.querySelectorAll('.tabs button').forEach(button => {
   });
 });
 
+// 載入停用網域
+function loadDisabledSites() {
+  chrome.storage.sync.get('disabledSites', (result) => {
+    const disabledSites = result.disabledSites || [];
+    const list = document.getElementById('disabledSiteList');
+    list.innerHTML = '';
+
+    disabledSites.forEach((site, index) => {
+      const div = document.createElement('div');
+      div.className = 'history-item';
+
+      const span = document.createElement('span');
+      span.textContent = site;
+      div.appendChild(span);
+
+      const deleteSpan = document.createElement('span');
+      deleteSpan.className = 'delete-btn';
+      deleteSpan.dataset.index = index;
+      deleteSpan.textContent = '×';
+      deleteSpan.addEventListener('click', (e) => {
+        const idx = parseInt(e.target.dataset.index);
+        disabledSites.splice(idx, 1);
+        chrome.storage.sync.set({ disabledSites }, () => {
+          loadDisabledSites();
+          chrome.runtime.sendMessage({ action: 'updateContextMenu' });
+        });
+      });
+      div.appendChild(deleteSpan);
+
+      list.appendChild(div);
+    });
+  });
+}
+
+// 新增停用網域
+document.getElementById('addDisabledSite').addEventListener('click', () => {
+  const input = document.getElementById('disabledSiteInput');
+  const domain = input.value.trim();
+
+  if (domain) {
+    chrome.storage.sync.get('disabledSites', (result) => {
+      const disabledSites = result.disabledSites || [];
+      if (!disabledSites.includes(domain)) {
+        disabledSites.push(domain);
+        chrome.storage.sync.set({ disabledSites }, () => {
+          input.value = '';
+          loadDisabledSites();
+          chrome.runtime.sendMessage({ action: 'updateContextMenu' });
+        });
+      }
+    });
+  }
+});
 // 初始化按鈕狀態
 const addItemBtn = document.getElementById('addItem');
 const newItemInput = document.getElementById('newItem');
@@ -259,5 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
   loadHistory();
   loadWishlist();
+  loadDisabledSites();
   document.getElementById('settingsTab').click();
 });
