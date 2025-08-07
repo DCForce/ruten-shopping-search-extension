@@ -106,6 +106,9 @@ function updateContextMenu() {
 
 // 處理選單點擊事件
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (!info.selectionText || info.selectionText.trim() === '') {
+    return;
+  }
   const searchTerm = encodeURIComponent(info.selectionText);
   
   chrome.storage.sync.get('sites', (siteResult) => {
