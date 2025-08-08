@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3] - 2025-08-08
+
+### Added
+- Introduced a configurable “disabled sites” list with a default entry for netflix.com
+- Added version info display at the top right of the popup window
+
+### Changed
+- Added a guard in the context-menu click handler to return early when no text is selected
+
+### Fixed
+- None
+
+
 ## [1.2.2] - 2025-07-19
 
 ### Added

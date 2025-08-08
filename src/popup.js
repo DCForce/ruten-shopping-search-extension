@@ -314,4 +314,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadWishlist();
   loadDisabledSites();
   document.getElementById('settingsTab').click();
+  // 顯示版本資訊
+  fetch(chrome.runtime.getURL('manifest.json'))
+    .then(res => res.json())
+    .then(manifest => {
+      document.getElementById('extVersion').textContent = manifest.version;
+    });
 });

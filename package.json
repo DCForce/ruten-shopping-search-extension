@@ -1,6 +1,6 @@
 {
     "name": "multi-platform-shopping-search",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "A Chrome extension for searching products across multiple shopping and MTG platforms",
     "scripts": {
       "build": "npm run prepare-manifest && webpack --mode production",
