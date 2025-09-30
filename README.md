@@ -11,15 +11,20 @@ Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
 ## ✨ 功能特色
 
 - 🔍 一鍵在多個購物平台搜尋商品
-- 🛍️ 支援台灣主要購物平台：
-  - 露天拍賣
-  - 蝦皮購物
-  - Yahoo購物
-  - PChome
-- 📝 自動記錄搜尋歷史
-- 📋 待購清單管理
-- ⚙️ 自訂搜尋平台設定
-- 🚫 指定網域停用右鍵搜尋
+- 🛍️ 支援多個台灣購物平台（共 10 個平台）：
+  - **購物平台**：momo購物網、PChome、露天拍賣、蝦皮購物、Yahoo購物
+  - **書店平台**：博客來、誠品、Taaze
+  - **遊戲平台**：Scryfall、遊戲平方
+- 📝 自動記錄搜尋歷史（最多 100 筆，包含時間戳記與平台資訊）
+- 📋 智慧待購清單管理
+  - 自動偵測 URL 並建立可點擊連結
+  - 一鍵新增目前瀏覽頁面
+  - 自動過濾重複項目
+- ⚙️ 彈性的平台設定
+  - 依分類（購物/書店/遊戲）批次啟用/停用
+  - 個別平台開關控制
+- 🚫 指定網域停用右鍵搜尋（預設停用 netflix.com）
+- 🔄 跨裝置同步設定（使用 Chrome Storage Sync）
 
 ## 📥 安裝方式
 
@@ -52,16 +57,16 @@ Chrome 擴充功能，輕鬆在多個購物平台上搜尋比價。
    - 管理停用網域
 
 ### 停用網域管理
-在「設定」分頁中可新增或移除停用的網域。當前頁面網域在清單中時，右鍵選單將不會顯示搜尋選項。
+在「停用網域」分頁中可新增或移除停用的網域。當前頁面網域（包含子網域）在清單中時，右鍵選單將不會顯示搜尋選項。擴充功能預設停用 netflix.com。
 
 ## 🛠️ 開發相關
 
 ### 技術框架
 
-- HTML
-- CSS
-- JavaScript
-- Chrome Extension API
+- HTML/CSS/JavaScript
+- Chrome Extension Manifest V3
+- Webpack 5 (模組打包)
+- Chrome Storage API (Sync & Local)
 
 ### 本地開發
 
@@ -108,18 +113,17 @@ There are no scripts or documentation for automated tests, so testing is current
 ### 專案結構
 
 ```
-├── manifest.json
-├── background.js
-├── popup
-│   ├── popup.html
-│   ├── popup.css
-│   └── popup.js
-├── icons
-│   ├── icon48.png
-│   └── icon128.png
-└── _locales
-    ├── zh_TW
-    └── en
+├── src/
+│   ├── manifest.json      # 擴充功能設定檔
+│   ├── background.js      # Service Worker (右鍵選單、儲存管理)
+│   ├── popup.html         # 彈出視窗介面
+│   ├── popup.css          # 彈出視窗樣式
+│   ├── popup.js           # 彈出視窗邏輯
+│   ├── settings.js        # 預設設定
+│   └── icon*.png          # 擴充功能圖示
+├── dist/                  # 建置輸出目錄
+├── webpack.config.js      # Webpack 設定
+└── package.json           # 專案依賴與版本管理
 ```
 
 ## 🤝 貢獻指南
