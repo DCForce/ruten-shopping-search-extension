@@ -314,6 +314,9 @@ document.getElementById('popOutBtn').addEventListener('click', () => {
     type: 'popup',
     width: 500,
     height: 680
+  }, () => {
+    // 新視窗開啟後，關閉當前的 popup
+    window.close();
   });
 });
 
