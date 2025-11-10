@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2025-11-10
+
+### Added
+- Pop-out button (⤢) in the top-right corner to open settings in a standalone window
+- Automatic detection to hide pop-out button when already in standalone window
+- Automatic closure of original popup when opening standalone window for cleaner UX
+
+### Changed
+- Increased standalone window size to 500x680 for better viewing experience
+
+### Fixed
+- None
+
+
 ## [1.2.3] - 2025-08-08
 
 ### Added

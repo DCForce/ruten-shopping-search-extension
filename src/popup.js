@@ -307,6 +307,19 @@ document.getElementById('addCurrentPage').addEventListener('click', () => {
   });
 });
 
+// 在新視窗開啟
+document.getElementById('popOutBtn').addEventListener('click', () => {
+  chrome.windows.create({
+    url: chrome.runtime.getURL('popup.html'),
+    type: 'popup',
+    width: 500,
+    height: 680
+  }, () => {
+    // 新視窗開啟後，關閉當前的 popup
+    window.close();
+  });
+});
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
@@ -314,6 +327,18 @@ document.addEventListener('DOMContentLoaded', () => {
   loadWishlist();
   loadDisabledSites();
   document.getElementById('settingsTab').click();
+
+  // 檢測是否在獨立視窗中，如果是則隱藏 pop-out 按鈕
+  chrome.windows.getCurrent((window) => {
+    if (window.type === 'popup') {
+      // 在獨立視窗中，隱藏 pop-out 按鈕
+      const popOutBtn = document.getElementById('popOutBtn');
+      if (popOutBtn) {
+        popOutBtn.style.display = 'none';
+      }
+    }
+  });
+
   // 顯示版本資訊
   fetch(chrome.runtime.getURL('manifest.json'))
     .then(res => res.json())
