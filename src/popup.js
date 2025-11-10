@@ -307,6 +307,16 @@ document.getElementById('addCurrentPage').addEventListener('click', () => {
   });
 });
 
+// 在新視窗開啟
+document.getElementById('popOutBtn').addEventListener('click', () => {
+  chrome.windows.create({
+    url: chrome.runtime.getURL('popup.html'),
+    type: 'popup',
+    width: 450,
+    height: 600
+  });
+});
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
